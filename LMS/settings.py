@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-e6x32sn)fd_hr*mh##-o$o8(slhmz$=(z43gtrw17u+o4_@mb$'
-
+JWT_SECRET = '0a4bf129f4215db7bbba01555e115dc1e8a52a70ea989287709e5b3a0dd70312'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -70,6 +70,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'LMS.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
