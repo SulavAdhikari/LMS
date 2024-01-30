@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 import jwt
 from .managers import CustomUserManager
 from LMS.settings import JWT_SECRET
+from datetime import timedelta
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_("email address"), unique=True)
