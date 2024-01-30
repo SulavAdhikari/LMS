@@ -12,6 +12,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
 
+    # extra fields
+    @property
+    def membership_date(self):
+        return self.date_joined    
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
