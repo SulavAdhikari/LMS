@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.contrib.auth.models import get_user_model
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('id', 'username', 'email', 'password')
         model = get_user_model()
@@ -14,3 +14,13 @@ class UserSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+    
+class UsersSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ('id', 'username')
+        model = get_user_model()
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ("__all__")
+        model = get_user_model()
