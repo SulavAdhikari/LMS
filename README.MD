@@ -17,6 +17,14 @@ To run use this command
 ```
 python manage.py runserver
 ```
+
+### Docker
+To run with docker
+```
+sudo docker-compose up --build
+```
+The docker volume has not been set. If you are changing code while the server is running you may need to restart the server for the changes to take effect.
+
 ## User Endpoints
 
 ### 1. Register User
