@@ -1,7 +1,22 @@
 # API Documentation
 
 This documentation provides details about the Book and User APIs, which allow book management and user-related actions.
+## How to run
+Use a virtual environment and follow the setup
+```
+pip install -r requiremets.txt
+python manage.py makemigrations
+python manage.py migrate --run-syncdb
+```
+You can create an admin user with
+```
+python manage.py createsuperuser
+```
 
+To run use this command
+```
+python manage.py runserver
+```
 ## User Endpoints
 
 ### 1. Register User
