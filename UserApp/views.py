@@ -16,7 +16,7 @@ class UserRegistrationView(APIView):
             return Response({'user_id': user.id, 'token': token}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class UserList(generics.ListCreateAPIView):
+class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UsersSerializer
 
