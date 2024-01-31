@@ -34,7 +34,7 @@ class BookDetailSerializer(serializers.ModelSerializer):
         if validated_data['language']:
             bookdetail.language = validated_data['language']
         bookdetail.save()
-
+        return bookdetail
     
         
 class BorrowedBookSerializer(serializers.ModelSerializer):
@@ -71,6 +71,6 @@ class BorrowedBookCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('You have not borrowed this book.')
 
         borrowed_book = BorrowedBook.objects.filter(user=request.user, book=Book.objects.get(pk=id)).first()
-        borrowed_book.return_date = datetime.now()
+        borrowed_book.return_date = datetime.today()
         borrowed_book.save()
         return borrowed_book
