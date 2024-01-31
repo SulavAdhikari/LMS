@@ -9,10 +9,34 @@ class BookSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'ISBN', 'genre', 'Published_date']
 
 class BookDetailSerializer(serializers.ModelSerializer):
+    book = BookSerializer(read_only=True)
     class Meta:
         model = BookDetail
         fields = ['id', 'book', 'NumberOfPages', 'language', 'publisher']
 
+    def create(self, validated_data, id):
+        book_detail = BookDetail(
+            book=Book.objects.get(pk=id),
+            NumberOfPages = validated_data["NumberOfPages"],
+            publisher = validated_data["publisher"],
+            language = validated_data['language']
+        )
+        book_detail.save()
+        return book_detail
+
+    def update(self, validated_data, id):
+        instance = BookDetail.objects.all()
+        bookdetail = instance.get(book=Book.objects.get(pk=id))
+        if validated_data["NumberOfPages"]:
+            bookdetail.NumberOfPages = validated_data['NumberOfPages']
+        if validated_data['publisher']:
+            bookdetail.publisher = validated_data['publisher']
+        if validated_data['language']:
+            bookdetail.language = validated_data['language']
+        bookdetail.save()
+
+    
+        
 class BorrowedBookSerializer(serializers.ModelSerializer):
     class Meta:
         model = BorrowedBook
