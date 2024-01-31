@@ -8,6 +8,7 @@ from LMS.settings import JWT_SECRET
 from datetime import timedelta
 
 class User(AbstractBaseUser, PermissionsMixin):
+    name = models.CharField(null=False, max_length = 255)
     email = models.EmailField(_("email address"), unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
