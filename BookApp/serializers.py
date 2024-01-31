@@ -44,18 +44,20 @@ class BorrowedBookSerializer(serializers.ModelSerializer):
 
 
 class BorrowedBookCreateSerializer(serializers.ModelSerializer):
+    book = BookSerializer(read_only=True)
     class Meta:
         model = BorrowedBook
         fields = ['book', 'return_date']
-
+    lookup_field = 'id'
     def create(self, validated_data):
+        id = self.context['view'].kwargs.get('id')
         request = self.context['request'] 
         
-        if BorrowedBook.objects.filter(user=request.user, book=validated_data['book'], return_date=None).exists():
+        if BorrowedBook.objects.filter(user=request.user, book=Book.objects.get(pk=id), return_date=None).exists():
             raise serializers.ValidationError('You have already borrowed this book and not returned it.')
 
         borrowed_book = BorrowedBook(
-            book = validated_data['book'],
+            book = Book.objects.get(pk=id),
             borrow_date = datetime.now(),
             user = request.user,
         )
@@ -63,9 +65,12 @@ class BorrowedBookCreateSerializer(serializers.ModelSerializer):
         return borrowed_book
     
     def update(self, validated_data, id):
+        id = self.context['view'].kwargs.get('id')
         request = self.context['request']
+        if not BorrowedBook.objects.filter(user=request.user, book=Book.objects.get(pk=id), return_date=None).exists():
+            raise serializers.ValidationError('You have not borrowed this book.')
 
-        borrowed_book = BorrowedBook.objects.filter(user=request.user, book=id)
+        borrowed_book = BorrowedBook.objects.filter(user=request.user, book=Book.objects.get(pk=id)).first()
         borrowed_book.return_date = datetime.now()
         borrowed_book.save()
         return borrowed_book

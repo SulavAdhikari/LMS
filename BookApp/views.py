@@ -66,23 +66,26 @@ class AssignUpdateBookDetailsView(views.APIView):
 
 
 class BorrowBookView(generics.CreateAPIView):
-    
     serializer_class = BorrowedBookCreateSerializer
+    lookup_field = 'id'
     authentication_classes = [CustomJWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
     
-
+    def get_queryset(self):
+        user = self.request.user
+        return BorrowedBook.objects.filter(user=user)
 
 class ReturnBookView(generics.UpdateAPIView):
-    queryset = BorrowedBook.objects.all()
     serializer_class = BorrowedBookCreateSerializer
     lookup_field = 'id'
     authentication_classes = [CustomJWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        user = self.request.user
+        return BorrowedBook.objects.filter(user=user)
 
 class ListAllBorrowedBooksView(generics.ListAPIView):
-    queryset = BorrowedBook.objects.all()
     serializer_class = BorrowedBookSerializer
     authentication_classes = [CustomJWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
