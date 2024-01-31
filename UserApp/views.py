@@ -27,7 +27,8 @@ class UserShow(generics.RetrieveAPIView):
     serializer = UserSerializer()
     queryset = User.objects.all()
     permission_classes = [permissions.IsAdminUser]
-    authentication_classes = CustomJWTAuthentication
+    authentication_classes = [CustomJWTAuthentication]
+
 class UserLoginView(APIView):
     def post(self, request):
         username = request.data.get('email')
