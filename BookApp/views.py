@@ -1,9 +1,10 @@
 from rest_framework import generics, permissions
+from rest_framework.response import Response
 
 from .models import Book, BookDetail, BorrowedBook
 from .serializers import BookSerializer, BookDetailSerializer, BorrowedBookCreateSerializer, BorrowedBookSerializer
 from UserApp.authentication import CustomJWTAuthentication
-from datetime import timezone
+from datetime import datetime
 
 
 class AddBookView(generics.CreateAPIView):
@@ -46,15 +47,10 @@ class BorrowBookView(generics.CreateAPIView):
 
 class ReturnBookView(generics.UpdateAPIView):
     queryset = BorrowedBook.objects.all()
-    serializer_class = BorrowedBookSerializer
+    serializer_class = BorrowedBookCreateSerializer
     lookup_field = 'id'
     authentication_classes = [CustomJWTAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-
-    def perform_update(self, serializer):
-        # Automatically set the borrow_date when updating the borrowed book
-        serializer.save(user=self.request.user, return_date = timezone.now())
-
 
 
 class ListAllBorrowedBooksView(generics.ListAPIView):

@@ -18,6 +18,7 @@ class BorrowedBookSerializer(serializers.ModelSerializer):
         model = BorrowedBook
         fields = ['id', 'user', 'book', 'borrow_date', 'return_date']
 
+
 class BorrowedBookCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = BorrowedBook
@@ -34,5 +35,13 @@ class BorrowedBookCreateSerializer(serializers.ModelSerializer):
             borrow_date = datetime.now(),
             user = request.user,
         )
+        borrowed_book.save()
+        return borrowed_book
+    
+    def update(self, validated_data, id):
+        request = self.context['request']
+
+        borrowed_book = BorrowedBook.objects.filter(user=request.user, book=id)
+        borrowed_book.return_date = datetime.now()
         borrowed_book.save()
         return borrowed_book
