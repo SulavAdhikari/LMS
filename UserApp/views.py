@@ -1,9 +1,10 @@
-from rest_framework import status, generics
+from rest_framework import status, generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import User
 from django.contrib.auth import authenticate
 from .serializers import UserCreateSerializer, UsersSerializer, UserSerializer
+from .authentication import CustomJWTAuthentication
 
 class UserRegistrationView(APIView):
     def post(self, request):
@@ -19,11 +20,14 @@ class UserRegistrationView(APIView):
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UsersSerializer
+    permission_classes = [permissions.IsAdminUser]
+    authentication_classes = [CustomJWTAuthentication]
 
 class UserShow(generics.RetrieveAPIView):
     serializer = UserSerializer()
     queryset = User.objects.all()
-
+    permission_classes = [permissions.IsAdminUser]
+    authentication_classes = CustomJWTAuthentication
 class UserLoginView(APIView):
     def post(self, request):
         username = request.data.get('email')
