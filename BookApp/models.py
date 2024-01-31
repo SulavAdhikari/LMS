@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from LMS import settings
 # Create your models here.
 
 class Book(models.Model):
@@ -16,7 +16,7 @@ class BookDetail(models.Model):
     publisher = models.CharField(max_length=255)
     
 class BorrowedBook(models.Model):
-    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     borrow_date =  models.DateField()
     return_date =  models.DateField(null=True)
