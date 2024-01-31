@@ -16,7 +16,7 @@ class BookDetail(models.Model):
     publisher = models.CharField(max_length=255)
     
 class BorrowedBook(models.Model):
-    user = models.ForeignKey(get_user_modedl(), on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     borrow_date =  models.DateField()
     return_date =  models.DateField(null=True)
