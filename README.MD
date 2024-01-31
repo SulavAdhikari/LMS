@@ -12,6 +12,10 @@ You can create an admin user with
 ```
 python manage.py createsuperuser
 ```
+for docker you can proceed after getting interactive shell
+```
+docker exec <CONTAINER_NAME> -it /bin/bash
+```
 
 To run use this command
 ```
@@ -24,6 +28,7 @@ To run with docker
 sudo docker-compose up --build
 ```
 The docker volume has not been set. If you are changing code while the server is running you may need to restart the server for the changes to take effect.
+
 
 ## User Endpoints
 
