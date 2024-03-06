@@ -1,6 +1,12 @@
 # API Documentation
 
 This documentation provides details about the Book and User APIs, which allow book management and user-related actions.
+
+## Database
+
+[Diagram](https://github.com/sulavadhikari/LMS/blob/master/erd.pg?raw=true)
+
+
 ## How to run
 Use a virtual environment and follow the setup
 ```
