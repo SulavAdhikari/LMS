@@ -4,7 +4,7 @@ This documentation provides details about the Book and User APIs, which allow bo
 
 ## Database
 
-[Diagram](https://github.com/sulavadhikari/LMS/blob/master/erd.pg?raw=true)
+[Diagram](https://github.com/sulavadhikari/LMS/blob/master/erd.png?raw=true)
 
 
 ## How to run
